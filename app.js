@@ -1,1 +1,5 @@
-console.log("hello world")
+// console.log(module);
+
+const logger = require("./logger");
+
+logger.log("ali");
