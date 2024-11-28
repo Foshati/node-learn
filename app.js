@@ -18,11 +18,21 @@
 // const files = fs.readFileSync("./");
 // console.log(files);
 
-const EventsEmitter = require("node:events");
-const emitter = new EventsEmitter();
+// const EventsEmitter = require("node:events");
+// const emitter = new EventsEmitter();
 
-emitter.on("msg", () => {
-  console.log("listen called");
+// emitter.on("msg", () => {
+//   console.log("listen called");
+// });
+// emitter.emit("msg");
+
+const http = require("http");
+
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("hello from home page");
+    res.end();
+  }
 });
 
-emitter.emit("msg");
+server.listen(3000);
