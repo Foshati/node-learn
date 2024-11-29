@@ -26,12 +26,16 @@
 // });
 // emitter.emit("msg");
 
-const http = require("http");
+const http = require("node:http");
 
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
     res.write("hello from home page");
     res.end();
+  }
+
+  if (req.url === "/api/books") {
+    res.write(JSON.parse);
   }
 });
 
