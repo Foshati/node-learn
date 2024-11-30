@@ -26,17 +26,32 @@
 // });
 // emitter.emit("msg");
 
-const http = require("node:http");
+// const http = require("node:http");
 
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.write("hello from home page");
-    res.end();
-  }
+// const server = http.createServer((req, res) => {
+//   if (req.url === "/") {
+//     res.write("hello from home page");
+//     res.end();
+//   }
 
-  if (req.url === "/api/books") {
-    res.write(JSON.parse);
-  }
+//   if (req.url === "/api/books") {
+//     res.write(JSON.parse);
+//   }
+// });
+
+// server.listen(3000);
+
+const express = require("express");
+require("dotenv").config();
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("hello from home page express");
 });
 
-server.listen(3000);
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`connected to port: ${port}`);
+});
