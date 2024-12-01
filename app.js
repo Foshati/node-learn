@@ -58,8 +58,15 @@ app.get("/api/books/:id?", (req, res) => {
   res.send(req.params.id);
 });
 
-app.get("/api/books/:id?/:name?", (req, res) => {
-  res.send([req.params.id]);
+app.get("/api/books/:id/:name", (req, res) => {
+  res.send([req.params.id, req.params.name]);
+});
+
+
+
+// /api/books/2/html?sort=id
+app.get("/api/books/:id/:name", (req, res) => {
+  res.send([req.params.id, req.params.name, req.query.sort]);
 });
 
 const port = process.env.PORT || 3000;
