@@ -50,6 +50,18 @@ app.get("/", (req, res) => {
   res.send("hello from home page express");
 });
 
+app.get("/api/books", (req, res) => {
+  res.send(["html", "css"]);
+});
+
+app.get("/api/books/:id?", (req, res) => {
+  res.send(req.params.id);
+});
+
+app.get("/api/books/:id?/:name?", (req, res) => {
+  res.send([req.params.id]);
+});
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
