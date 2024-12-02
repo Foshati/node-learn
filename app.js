@@ -47,7 +47,6 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
-
 const books = [
   { id: 1, name: "html" },
   { id: 2, name: "css" },
@@ -83,14 +82,36 @@ app.get("/api/books/:id/:name", (req, res) => {
 
 app.post("/api/books", (req, res) => {
   if (!req.body.name || req.body.name.length < 3) {
-     res.status(400).send("name is require");
-     return
+    return res.status(400).send("name is require");
   }
+
   const book = {
     id: books.length + 1,
     name: req.body.name,
   };
   books.push(book);
+  res.send(book);
+});
+
+app.put("/api/books/:id", (req, res) => {
+  const book = books.find((b) => b.id === parseInt(req.params.id));
+  if (!book) {
+    return res.status(404).send("not found");
+  }
+  if (!req.body.name || req.body.name.length < 3) {
+    return res.status(400).send("name is require");
+  }
+  book.name = req.body.name;
+  res.send(book);
+});
+
+app.delete("/api/books/:id", (req, res) => {
+  const book = books.find((b) => b.id === parseInt(req.params.id));
+  if (!book) {
+    return res.status(404).send("not found");
+  }
+  const index = books.indexOf(book);
+  books.splice(index, 1);
   res.send(book);
 });
 
