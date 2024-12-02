@@ -45,6 +45,14 @@ const express = require("express");
 require("dotenv").config();
 
 const app = express();
+app.use(express.json());
+
+
+const books = [
+  { id: 1, name: "html" },
+  { id: 2, name: "css" },
+  { id: 3, name: "js" },
+];
 
 app.get("/", (req, res) => {
   res.send("hello from home page express");
@@ -54,19 +62,36 @@ app.get("/api/books", (req, res) => {
   res.send(["html", "css"]);
 });
 
-app.get("/api/books/:id?", (req, res) => {
-  res.send(req.params.id);
+// app.get("/api/books/:id?", (req, res) => {
+//   res.send(req.params.id);
+// });
+
+app.get("/api/books/:id", (req, res) => {
+  const book = books.find((b) => b.id === parseInt(req.params.id));
+  if (!book) res.status(404).send("not found");
+  res.send(book);
 });
 
 app.get("/api/books/:id/:name", (req, res) => {
   res.send([req.params.id, req.params.name]);
 });
 
-
-
 // /api/books/2/html?sort=id
 app.get("/api/books/:id/:name", (req, res) => {
   res.send([req.params.id, req.params.name, req.query.sort]);
+});
+
+app.post("/api/books", (req, res) => {
+  if (!req.body.name || req.body.name.length < 3) {
+     res.status(400).send("name is require");
+     return
+  }
+  const book = {
+    id: books.length + 1,
+    name: req.body.name,
+  };
+  books.push(book);
+  res.send(book);
 });
 
 const port = process.env.PORT || 3000;
